@@ -3,7 +3,7 @@ using WowPacketParser.SQL;
 
 namespace WowPacketParser.Store.Objects
 {
-    [DBTableName("creature_template_gossip")]
+    [DBTableName("creature_template_gossip", Enums.TargetedDatabaseFlag.SinceDragonflight)]
     public sealed record CreatureTemplateGossip : IDataModel
     {
         [DBFieldName("CreatureID", true)]

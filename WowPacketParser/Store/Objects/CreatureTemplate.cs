@@ -152,7 +152,7 @@ namespace WowPacketParser.Store.Objects
 
     }
 
-    [DBTableName("creature_questitem")]
+    [DBTableName("creature_questitem", TargetedDatabaseFlag.SinceWarlordsOfDraenor)]
     public sealed record CreatureTemplateQuestItem : IDataModel
     {
         [DBFieldName("CreatureEntry", true)]
@@ -171,7 +171,7 @@ namespace WowPacketParser.Store.Objects
         public int? VerifiedBuild = ClientVersion.BuildInt;
     }
 
-    [DBTableName("creature_quest_currency")]
+    [DBTableName("creature_quest_currency", TargetedDatabaseFlag.SinceDragonflight)]
     public sealed record CreatureTemplateQuestCurrency : IDataModel
     {
         [DBFieldName("CreatureId", true)]

@@ -4,7 +4,7 @@ using WowPacketParser.Enums;
 
 namespace WowPacketParser.Store.Objects
 {
-    [DBTableName("quest_reward_display_spell")]
+    [DBTableName("quest_reward_display_spell", TargetedDatabaseFlag.SinceShadowlands)]
     public sealed record QuestRewardDisplaySpell : IDataModel
     {
         [DBFieldName("QuestID", true)]

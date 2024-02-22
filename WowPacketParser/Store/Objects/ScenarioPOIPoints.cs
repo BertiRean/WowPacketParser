@@ -3,7 +3,7 @@ using WowPacketParser.SQL;
 
 namespace WowPacketParser.Store.Objects
 {
-    [DBTableName("scenario_poi_points")]
+    [DBTableName("scenario_poi_points", Enums.TargetedDatabaseFlag.SinceLegion)]
     public sealed record ScenarioPOIPoint : IDataModel
     {
         [DBFieldName("CriteriaTreeID", true)]
