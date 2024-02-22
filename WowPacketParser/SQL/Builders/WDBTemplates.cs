@@ -24,7 +24,7 @@ namespace WowPacketParser.SQL.Builders
             return SQLUtil.Compare(Storage.QuestTemplates, templatesDb, StoreNameType.Quest);
         }
 
-        [BuilderMethod(true)]
+        [BuilderMethod]
         public static string QuestObjective()
         {
             if (!Settings.SQLOutputFlag.HasAnyFlagBit(SQLOutput.quest_template))
@@ -42,7 +42,7 @@ namespace WowPacketParser.SQL.Builders
             return SQLUtil.Compare(Storage.QuestObjectives, templatesDb, StoreNameType.QuestObjective);
         }
 
-        [BuilderMethod(true)]
+        [BuilderMethod]
         public static string QuestVisualEffect()
         {
             if (!Settings.SQLOutputFlag.HasAnyFlagBit(SQLOutput.quest_template))
@@ -60,7 +60,7 @@ namespace WowPacketParser.SQL.Builders
             return SQLUtil.Compare(Storage.QuestVisualEffects, templateDb, StoreNameType.None);
         }
 
-        [BuilderMethod(true)]
+        [BuilderMethod]
         public static string QuestRewardDisplaySpell()
         {
             if (!Settings.SQLOutputFlag.HasAnyFlagBit(SQLOutput.quest_template))
@@ -77,7 +77,7 @@ namespace WowPacketParser.SQL.Builders
             return SQLUtil.Compare(Storage.QuestRewardDisplaySpells, templatesDb, StoreNameType.None);
         }
 
-        [BuilderMethod(true, Units = true)]
+        [BuilderMethod(false, Units = true)]
         public static string CreatureTemplate(Dictionary<WowGuid, Unit> units)
         {
             if (!Settings.SQLOutputFlag.HasAnyFlagBit(SQLOutput.creature_template))
@@ -98,7 +98,7 @@ namespace WowPacketParser.SQL.Builders
             return string.Empty;
         }
 
-        [BuilderMethod(true)]
+        [BuilderMethod]
         public static string CreatureTemplateModel()
         {
             if (!Settings.SQLOutputFlag.HasAnyFlagBit(SQLOutput.creature_template))
@@ -115,7 +115,7 @@ namespace WowPacketParser.SQL.Builders
             return SQLUtil.Compare(Storage.CreatureTemplateModels, templatesDb, StoreNameType.Unit);
         }
 
-        [BuilderMethod(true)]
+        [BuilderMethod]
         public static string CreatureTemplateQuestItem()
         {
             if (!Settings.SQLOutputFlag.HasAnyFlagBit(SQLOutput.creature_template))
@@ -132,7 +132,7 @@ namespace WowPacketParser.SQL.Builders
             return SQLUtil.Compare(Storage.CreatureTemplateQuestItems, templatesDb, StoreNameType.Unit);
         }
 
-        [BuilderMethod(true)]
+        [BuilderMethod]
         public static string CreatureTemplateQuestCurrencies()
         {
             if (!Settings.SQLOutputFlag.HasAnyFlagBit(SQLOutput.creature_template))
@@ -151,7 +151,7 @@ namespace WowPacketParser.SQL.Builders
             });
         }
 
-        [BuilderMethod(true, Gameobjects = true)]
+        [BuilderMethod(false, Gameobjects = true)]
         public static string GameObjectTemplate(Dictionary<WowGuid, GameObject> gameobjects)
         {
             if (!Settings.SQLOutputFlag.HasAnyFlagBit(SQLOutput.gameobject_template))
@@ -175,7 +175,7 @@ namespace WowPacketParser.SQL.Builders
             return SQLUtil.Compare(Storage.GameObjectTemplates, templatesDb, StoreNameType.GameObject);
         }
 
-        [BuilderMethod(true)]
+        [BuilderMethod]
         public static string GameObjectTemplateQuestItem()
         {
             if (!Settings.SQLOutputFlag.HasAnyFlagBit(SQLOutput.gameobject_template))
@@ -511,7 +511,7 @@ namespace WowPacketParser.SQL.Builders
             return string.Empty;
         }
 
-        [BuilderMethod(true)]
+        [BuilderMethod]
         public static string ScenarioPOI()
         {
             if (!Settings.SQLOutputFlag.HasAnyFlagBit(SQLOutput.scenario_poi))
@@ -525,7 +525,7 @@ namespace WowPacketParser.SQL.Builders
             return SQLUtil.Compare(Storage.ScenarioPOIs, templatesDb, StoreNameType.None);
         }
 
-        [BuilderMethod(true)]
+        [BuilderMethod]
         public static string ScenarioPOIPoint()
         {
             if (!Settings.SQLOutputFlag.HasAnyFlagBit(SQLOutput.scenario_poi))
