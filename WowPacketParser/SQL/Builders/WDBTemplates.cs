@@ -86,7 +86,10 @@ namespace WowPacketParser.SQL.Builders
             if (!Storage.CreatureTemplates.IsEmpty() && Settings.TargetedDatabase != TargetedDatabase.Classic)
             {
                 var templatesDb = SQLDatabase.Get(Storage.CreatureTemplates.Values);
-                return SQLUtil.Compare(Storage.CreatureTemplates.Values, templatesDb, StoreNameType.Unit);
+                var templatesSniff = Storage.CreatureTemplates.Values.Where(
+                    x => x.Item1.RequiredExpansion <= Settings.ExpansionFilter
+                );
+                return SQLUtil.Compare(templatesSniff, templatesDb, StoreNameType.Unit);
             }
 
             if (!Storage.CreatureTemplatesClassic.IsEmpty() && Settings.TargetedDatabase == TargetedDatabase.Classic)

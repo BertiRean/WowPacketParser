@@ -270,6 +270,9 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             quest.QuestRewardID = packet.ReadInt32("TreasurePickerID");
             quest.Expansion = packet.ReadInt32("Expansion");
 
+            if (quest.Expansion > (int)Settings.ExpansionFilter)
+                return;
+
             if (ClientVersion.AddedInVersion(ClientVersionBuild.V8_1_5_29683))
                 quest.ManagedWorldStateID = packet.ReadInt32("ManagedWorldStateID");
 

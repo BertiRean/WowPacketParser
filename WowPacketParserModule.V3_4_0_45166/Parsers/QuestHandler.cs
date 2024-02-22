@@ -202,6 +202,9 @@ namespace WowPacketParserModule.V3_4_0_45166.Parsers
             quest.QuestRewardID = packet.ReadInt32("TreasurePickerID");
             quest.Expansion = packet.ReadInt32("Expansion");
 
+            if (quest.Expansion > (int)Settings.ExpansionFilter)
+                return;
+
             packet.ResetBitReader();
 
             uint logTitleLen = packet.ReadBits(9);
@@ -439,6 +442,10 @@ namespace WowPacketParserModule.V3_4_0_45166.Parsers
             quest.AllowableRacesWod = packet.ReadUInt64("AllowableRaces");
             quest.QuestRewardID = packet.ReadInt32("TreasurePickerID");
             quest.Expansion = packet.ReadInt32("Expansion");
+
+            if (quest.Expansion > (int)Settings.ExpansionFilter)
+                return;
+
             quest.ManagedWorldStateID = packet.ReadInt32("ManagedWorldStateID");
             quest.QuestSessionBonus = packet.ReadInt32("QuestSessionBonus");
             packet.ReadInt32("QuestGiverCreatureID");

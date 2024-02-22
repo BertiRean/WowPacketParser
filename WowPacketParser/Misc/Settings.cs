@@ -16,6 +16,7 @@ namespace WowPacketParser.Misc
         public static readonly int FilterPacketsNum = Conf.GetInt("FilterPacketsNum", 0);
         public static readonly ClientVersionBuild ClientBuild = Conf.GetEnum("ClientBuild", ClientVersionBuild.Zero);
         public static readonly LocaleConstant ClientLocale = Conf.GetEnum("ClientLocale", LocaleConstant.enUS);
+        public static readonly ClientType ExpansionFilter = Conf.GetEnum("ExpansionFilter", ClientType.Dragonflight);
         public static readonly TargetedDatabase TargetedDatabase = Conf.GetEnum("TargetedDatabase", TargetedDatabase.WrathOfTheLichKing);
         public static readonly DumpFormatType DumpFormat = Conf.GetEnum("DumpFormat", DumpFormatType.Text);
         public static readonly ulong SQLOutputFlag = GetSQLOutputFlag();

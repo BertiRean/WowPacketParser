@@ -193,6 +193,9 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
             if (ClientVersion.AddedInVersion(ClientVersionBuild.V7_2_0_23826))
                 quest.Expansion = packet.ReadInt32("Expansion");
 
+            if (quest.Expansion > (int)Settings.ExpansionFilter)
+                return;
+
             packet.ResetBitReader();
 
             uint logTitleLen = packet.ReadBits(9);

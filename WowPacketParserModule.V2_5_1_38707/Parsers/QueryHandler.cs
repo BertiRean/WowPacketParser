@@ -401,6 +401,9 @@ namespace WowPacketParserModule.V2_5_1_38835.Parsers
             quest.QuestRewardID = packet.ReadInt32("TreasurePickerID");
             quest.Expansion = packet.ReadInt32("Expansion");
 
+            if (quest.Expansion > (int)Settings.ExpansionFilter)
+                return;
+
             packet.ResetBitReader();
             uint logTitleLen = packet.ReadBits(9);
             uint logDescriptionLen = packet.ReadBits(12);
