@@ -9,10 +9,12 @@ using WowPacketParser.SQL;
 
 namespace WowPacketParser.Store.Objects
 {
-    [DBTableName("areatrigger_create_properties_orbit")]
+    [DBTableName("areatrigger_create_properties_orbit", TargetedDatabaseFlag.SinceShadowlands)]
+    [DBTableName("spell_areatrigger_circular", TargetedDatabaseFlag.TillBattleForAzeroth)]
     public sealed record AreaTriggerCreatePropertiesOrbit : IDataModel
     {
-        [DBFieldName("AreaTriggerCreatePropertiesId", true, true)]
+        [DBFieldName("SpellMiscId", TargetedDatabaseFlag.TillBattleForAzeroth, true, true)]
+        [DBFieldName("AreaTriggerCreatePropertiesId", TargetedDatabaseFlag.SinceShadowlands, true, true)]
         public uint? AreaTriggerCreatePropertiesId;
 
         [DBFieldName("IsCustom", TargetedDatabaseFlag.SinceDragonflight, true)]

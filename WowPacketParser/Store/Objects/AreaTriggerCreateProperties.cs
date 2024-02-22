@@ -41,10 +41,10 @@ namespace WowPacketParser.Store.Objects
         [DBFieldName("FacingCurveId")]
         public int? FacingCurveId = 0;
 
-        [DBFieldName("AnimId")]
+        [DBFieldName("AnimId", TargetedDatabaseFlag.SinceShadowlands)]
         public int? AnimId = ClientVersion.AddedInVersion(ClientVersionBuild.V9_1_5_40772) ? -1 : 0;
 
-        [DBFieldName("AnimKitId")]
+        [DBFieldName("AnimKitId", TargetedDatabaseFlag.SinceShadowlands)]
         public int? AnimKitId = 0;
 
         [DBFieldName("DecalPropertiesId")]

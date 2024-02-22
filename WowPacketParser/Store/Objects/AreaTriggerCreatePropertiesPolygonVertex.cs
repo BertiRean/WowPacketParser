@@ -4,11 +4,13 @@ using WowPacketParser.SQL;
 
 namespace WowPacketParser.Store.Objects
 {
-    [DBTableName("spell_areatrigger_vertices", TargetedDatabaseFlag.TillBattleForAzeroth)]
+    [DBTableName("areatrigger_template_polygon_vertices", TargetedDatabaseFlag.Legion)]
+    [DBTableName("spell_areatrigger_vertices", TargetedDatabaseFlag.BattleForAzeroth)]
     [DBTableName("areatrigger_create_properties_polygon_vertex", TargetedDatabaseFlag.SinceShadowlands)]
     public sealed record AreaTriggerCreatePropertiesPolygonVertex : IDataModel
     {
-        [DBFieldName("SpellMiscId", TargetedDatabaseFlag.TillBattleForAzeroth, true)]
+        [DBFieldName("AreaTriggerId", TargetedDatabaseFlag.Legion, true)]
+        [DBFieldName("SpellMiscId", TargetedDatabaseFlag.BattleForAzeroth, true)]
         [DBFieldName("AreaTriggerCreatePropertiesId", TargetedDatabaseFlag.SinceShadowlands, true)]
         public uint? AreaTriggerCreatePropertiesId;
 
@@ -39,12 +41,14 @@ namespace WowPacketParser.Store.Objects
         public WowGuid areatriggerGuid;
     }
 
-    [DBTableName("spell_areatrigger_vertices", TargetedDatabaseFlag.TillBattleForAzeroth)]
+    [DBTableName("areatrigger_template_polygon_vertices", TargetedDatabaseFlag.Legion)]
+    [DBTableName("spell_areatrigger_vertices", TargetedDatabaseFlag.BattleForAzeroth)]
     [DBTableName("areatrigger_create_properties_polygon_vertex", TargetedDatabaseFlag.SinceShadowlands)]
     public sealed record AreaTriggerCreatePropertiesPolygonVertexCustom : IDataModel
     {
-        [DBFieldName("SpellMiscId", TargetedDatabaseFlag.TillBattleForAzeroth, true, true)]
-        [DBFieldName("AreaTriggerCreatePropertiesId", TargetedDatabaseFlag.SinceShadowlands, true, true)]
+        [DBFieldName("AreaTriggerId", TargetedDatabaseFlag.Legion, true)]
+        [DBFieldName("SpellMiscId", TargetedDatabaseFlag.BattleForAzeroth, true)]
+        [DBFieldName("AreaTriggerCreatePropertiesId", TargetedDatabaseFlag.SinceShadowlands, true)]
         public string AreaTriggerCreatePropertiesId;
 
         [DBFieldName("IsCustom", TargetedDatabaseFlag.SinceDragonflight, true)]
