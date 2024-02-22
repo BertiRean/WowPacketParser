@@ -22,7 +22,7 @@ namespace WowPacketParser.Store.Objects
         [DBFieldName("areaId")]
         public uint? AreaID;
 
-        [DBFieldName("spawnMask", TargetedDatabaseFlag.TillBattleForAzeroth)]
+        [DBFieldName("spawnMask", TargetedDatabaseFlag.TillWarlordsOfDraenor)]
         public uint? SpawnMask;
 
         [DBFieldName("spawnDifficulties", TargetedDatabaseFlag.SinceLegion | TargetedDatabaseFlag.WotlkClassic)]

@@ -58,7 +58,8 @@ namespace WowPacketParser.Store.Objects
         [DBFieldName("spawntimesecs")]
         public int? SpawnTimeSecs;
 
-        [DBFieldName("wander_distance")]
+        [DBFieldName("spawndist", TargetedDatabaseFlag.TillBattleForAzeroth)]
+        [DBFieldName("wander_distance", TargetedDatabaseFlag.SinceShadowlands)]
         public float? WanderDistance;
 
         [DBFieldName("currentwaypoint")]
