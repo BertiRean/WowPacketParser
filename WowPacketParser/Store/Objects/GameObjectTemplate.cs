@@ -51,7 +51,7 @@ namespace WowPacketParser.Store.Objects
         public int? VerifiedBuild = ClientVersion.BuildInt;
     }
 
-    [DBTableName("gameobject_questitem")]
+    [DBTableName("gameobject_questitem", TargetedDatabaseFlag.SinceWarlordsOfDraenor)]
     public sealed record GameObjectTemplateQuestItem : IDataModel
     {
         [DBFieldName("GameObjectEntry", true)]

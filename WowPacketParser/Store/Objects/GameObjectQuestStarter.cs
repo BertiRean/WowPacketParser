@@ -13,7 +13,7 @@ namespace WowPacketParser.Store.Objects
         [DBFieldName("quest", true)]
         public uint? QuestID;
 
-        [DBFieldName("VerifiedBuild")]
+        [DBFieldName("VerifiedBuild", TargetedDatabaseFlag.SinceShadowlands)]
         public int? VerifiedBuild = ClientVersion.BuildInt;
     }
 }
