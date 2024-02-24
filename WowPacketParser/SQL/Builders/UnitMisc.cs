@@ -158,7 +158,7 @@ namespace WowPacketParser.SQL.Builders
             return SQLUtil.Compare(Settings.SQLOrderByKey ? Storage.CreatureTemplateDifficultiesWDB.OrderBy(x => x.Item1.Entry).ToArray() : Storage.CreatureTemplateDifficultiesWDB.ToArray(), templatesDb, StoreNameType.Unit);
         }
 
-        [BuilderMethod(true, Units = true)]
+        [BuilderMethod(false, Units = true)]
         public static string CreatureTemplateScalingData(Dictionary<WowGuid, Unit> units)
         {
             if (units.Count == 0)
@@ -670,7 +670,7 @@ namespace WowPacketParser.SQL.Builders
             return 0;
         }
 
-        [BuilderMethod(true, Units = true)]
+        [BuilderMethod(false, Units = true)]
         public static string CreatureTemplateNonWDB(Dictionary<WowGuid, Unit> units)
         {
             if (units.Count == 0)

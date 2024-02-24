@@ -35,6 +35,14 @@ namespace WowPacketParser.Parsing.Parsers
             ActivePhases.Clear();
         }
 
+        public static List<ushort> GetPhasesAdded()
+        {
+            if (Storage.StackPhases.Count > 0)
+                return Storage.StackPhases.Peek().AddedPhases;
+
+            return [.. ActivePhases.Keys];
+        }
+
         public static void ShowPossiblePhaseChangesInRemoveObjects(Packet packet)
         {
             if (!Settings.ShowPossibleObjectsChangedByPhases || Storage.StackPhases.Count <= 0)

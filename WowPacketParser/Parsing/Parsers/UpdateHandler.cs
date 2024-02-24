@@ -123,7 +123,7 @@ namespace WowPacketParser.Parsing.Parsers
             obj.Area = WorldStateHandler.CurrentAreaId;
             obj.Zone = WorldStateHandler.CurrentZoneId;
             obj.PhaseMask = (uint)MovementHandler.CurrentPhaseMask;
-            obj.Phases = new HashSet<ushort>(MovementHandler.ActivePhases.Keys);
+            obj.Phases = new HashSet<ushort>(MovementHandler.GetPhasesAdded());
             obj.DifficultyID = MovementHandler.CurrentDifficultyID;
 
             return obj;

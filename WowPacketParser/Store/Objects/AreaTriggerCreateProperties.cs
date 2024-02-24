@@ -83,7 +83,7 @@ namespace WowPacketParser.Store.Objects
         {
             spellId             = (uint)AreaTriggerData.SpellID;
             SpellForVisuals     = (uint)AreaTriggerData.SpellForVisuals;
-            DecalPropertiesId   = AreaTriggerData.DecalPropertiesID;
+            DecalPropertiesId = AreaTriggerData.DecalPropertiesID;
             TimeToTarget        = AreaTriggerData.TimeToTarget;
             TimeToTargetScale   = AreaTriggerData.TimeToTargetScale;
             AreaTriggerCreatePropertiesId = GetAreaTriggerCreatePropertiesIdFromSpellId(spellId);

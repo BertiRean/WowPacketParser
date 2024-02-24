@@ -10,7 +10,7 @@ namespace WowPacketParser.SQL.Builders
     [BuilderClass]
     public static class WDBTemplates
     {
-        [BuilderMethod(true)]
+        [BuilderMethod]
         public static string QuestTemplate()
         {
             if (!Settings.SQLOutputFlag.HasAnyFlagBit(SQLOutput.quest_template))
