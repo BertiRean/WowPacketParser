@@ -369,7 +369,7 @@
         AREATRIGGER_TIME_TO_TARGET_SCALE                       = ObjectField.OBJECT_END + 0x014, // Size: 1, Flags: PUBLIC, URGENT
         AREATRIGGER_TIME_TO_TARGET_EXTRA_SCALE                 = ObjectField.OBJECT_END + 0x015, // Size: 1, Flags: PUBLIC, URGENT
         AREATRIGGER_SPELLID                                    = ObjectField.OBJECT_END + 0x016, // Size: 1, Flags: PUBLIC
-        AREATRIGGER_SPELLVISUALID                              = ObjectField.OBJECT_END + 0x017, // Size: 1, Flags: DYNAMIC
+        AREATRIGGER_SPELL_X_SPELL_VISUAL_ID                    = ObjectField.OBJECT_END + 0x017, // Size: 1, Flags: DYNAMIC
         AREATRIGGER_BOUNDS_RADIUS_2D                           = ObjectField.OBJECT_END + 0x018, // Size: 1, Flags: DYNAMIC, URGENT
         AREATRIGGER_DECAL_PROPERTIES_ID                        = ObjectField.OBJECT_END + 0x019, // Size: 1, Flags: PUBLIC
         AREATRIGGER_END                                        = ObjectField.OBJECT_END + 0x01A,
