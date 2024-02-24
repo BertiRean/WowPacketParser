@@ -4,7 +4,7 @@ using WowPacketParser.SQL;
 
 namespace WowPacketParser.Store.Objects
 {
-    [DBTableName("item_template")]
+    [DBTableName("item_template", TargetedDatabaseFlag.TillCataclysm)]
     public sealed record ItemTemplate : IDataModel
     {
         [DBFieldName("entry", true)]
