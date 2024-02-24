@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using Google.Protobuf.WellKnownTypes;
@@ -34,10 +35,47 @@ namespace WowPacketParser.Parsing.Parsers
             ActivePhases.Clear();
         }
 
+        public static void ShowPossiblePhaseChangesInRemoveObjects(Packet packet)
+        {
+            if (!Settings.ShowPossibleObjectsChangedByPhases || Storage.StackPhases.Count <= 0)
+                return;
+
+            PhaseStackInfo info = Storage.StackPhases.Peek();
+            TimeSpan diff = packet.TimeSpan.Subtract(info.PacketTime);
+
+            if (diff.TotalMilliseconds < 250)
+            {
+                packet.WriteLine($"Phases Added: {string.Join(',', info.AddedPhases)}");
+                packet.WriteLine($"Phases Removed: {string.Join(',', info.RemovedPhases)}");
+            }
+        }
+
         public static void WritePhaseChanges(Packet packet)
         {
             var addedPhases = ActivePhases.Keys.Where(p => !OldPhases.ContainsKey(p));
             var removedPhases = OldPhases.Keys.Where(p => !ActivePhases.ContainsKey(p));
+
+            PhaseStackInfo phaseStackInfo;
+            phaseStackInfo.AddedPhases = addedPhases.ToList();
+            phaseStackInfo.RemovedPhases = removedPhases.ToList();
+            phaseStackInfo.PacketTime = packet.TimeSpan;
+
+            Storage.StackPhases.Push(phaseStackInfo);
+
+            foreach (var phase in removedPhases)
+            {
+                HashSet<WowGuid128> items;
+                if (Storage.AddedCreaturesInPhase.TryGetValue(phase, out items))
+                {
+                    if (items.Count > 0)
+                    {
+                        packet.WriteLine($"// Possible Creatures Removed In Phase: {phase}");
+                        packet.WriteLine($"{string.Join('\n', items)}");
+                        items.Clear();
+                    }
+                }
+            }
+
             packet.WriteLine($"// Added Phases: {string.Join(", ", addedPhases)}");
             packet.WriteLine($"// Removed Phases: {string.Join(", ", removedPhases)}");
         }
@@ -1927,6 +1965,38 @@ namespace WowPacketParser.Parsing.Parsers
         [Parser(Opcode.CMSG_MOUNT_SPECIAL_ANIM)]
         public static void HandleMovementNull(Packet packet)
         {
+        }
+
+        public static void RegisterObjCreateInPhases(Packet packet, WowGuid guid)
+        {
+            if (!Settings.ShowPossibleObjectsChangedByPhases || Storage.StackPhases.Count <= 0)
+                return;
+
+            ObjectType objType = guid.GetObjectType();
+
+            if (objType == ObjectType.Unit || objType == ObjectType.GameObject)
+            {
+                PhaseStackInfo info = Storage.StackPhases.Peek();
+                TimeSpan diff = packet.TimeSpan.Subtract(info.PacketTime);
+
+                if (diff.TotalMilliseconds < 250)
+                {
+                    WowGuid128 guid128 = new WowGuid128(guid.Low, guid.High);
+                    foreach (uint phase in info.AddedPhases)
+                    {
+                        HashSet<WowGuid128> added;
+
+                        if (!Storage.AddedCreaturesInPhase.ContainsKey(phase))
+                            Storage.AddedCreaturesInPhase.Add(phase, new HashSet<WowGuid128>());
+
+                        if (Storage.AddedCreaturesInPhase.TryGetValue(phase, out added))
+                        {
+                            if (!added.Contains(guid128))
+                                added.Add(guid128);
+                        }
+                    }
+                }
+            }
         }
     }
 }

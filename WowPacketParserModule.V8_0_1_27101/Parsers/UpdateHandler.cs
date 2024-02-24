@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using WowPacketParser.Enums;
 using WowPacketParser.Misc;
 using WowPacketParser.PacketStructures;
@@ -29,11 +30,15 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             uint map = updateObject.MapId = packet.ReadUInt16<MapId>("MapID");
             packet.ResetBitReader();
             var hasRemovedObjects = packet.ReadBit("HasRemovedObjects");
+
             if (hasRemovedObjects)
             {
                 var destroyedObjCount = packet.ReadInt16("DestroyedObjCount");
                 var removedObjCount = packet.ReadUInt32("RemovedObjCount"); // destroyed + out of range
                 var outOfRangeObjCount = removedObjCount - destroyedObjCount;
+
+                if (destroyedObjCount > 0 || removedObjCount > 0)
+                    CoreParsers.MovementHandler.ShowPossiblePhaseChangesInRemoveObjects(packet);
 
                 for (var i = 0; i < destroyedObjCount; i++)
                 {
@@ -54,7 +59,6 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             for (var i = 0; i < count; i++)
             {
                 var type = (UpdateTypeCataclysm)packet.ReadByte();
-
                 var partWriter = new StringBuilderProtoPart(packet.Writer);
                 packet.AddValue("UpdateType", type.ToString(), i);
                 switch (type)
@@ -156,6 +160,14 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
                         createObject.TextStartOffset = partWriter.StartOffset;
                         createObject.TextLength = partWriter.Length;
                         updateObject.Created.Add(createObject);
+
+                        if (Storage.StackPhases.Count > 0)
+                        {
+                            PhaseStackInfo info = Storage.StackPhases.Peek();
+                            TimeSpan diff = packet.TimeSpan.Subtract(info.PacketTime);
+                            packet.WriteLine("Create Npcs Difference Between Last Phase Change: " + diff.TotalMilliseconds.ToString());
+                        }
+
                         break;
                     }
                 }
@@ -167,6 +179,8 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             ObjectType objType = ObjectTypeConverter.Convert(packet.ReadByteE<ObjectType801>("Object Type", index));
             if (ClientVersion.RemovedInVersion(ClientVersionBuild.V8_1_0_28724))
                 packet.ReadInt32("HeirFlags", index);
+
+            CoreParsers.MovementHandler.RegisterObjCreateInPhases(packet, guid);
 
             WoWObject obj = CoreParsers.UpdateHandler.CreateObject(objType, guid, map);
 

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 using WowPacketParser.Enums;
 using WowPacketParser.Misc;
 using WowPacketParser.PacketStructures;
@@ -26,11 +28,15 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
             uint map = updateObject.MapId = packet.ReadUInt16<MapId>("MapID");
             packet.ResetBitReader();
             var hasRemovedObjects = packet.ReadBit("HasRemovedObjects");
+
             if (hasRemovedObjects)
             {
                 var destroyedObjCount = packet.ReadInt16("DestroyedObjCount");
                 var removedObjCount = packet.ReadUInt32("RemovedObjCount"); // destroyed + out of range
                 var outOfRangeObjCount = removedObjCount - destroyedObjCount;
+
+                if (destroyedObjCount > 0 || removedObjCount > 0) 
+                    CoreParsers.MovementHandler.ShowPossiblePhaseChangesInRemoveObjects(packet);
 
                 for (var i = 0; i < destroyedObjCount; i++)
                 {
@@ -50,7 +56,6 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
             for (var i = 0; i < count; i++)
             {
                 var type = (UpdateTypeCataclysm)packet.ReadByte();
-
                 var partWriter = new StringBuilderProtoPart(packet.Writer);
                 packet.AddValue("UpdateType", type.ToString(), i);
                 switch (type)
@@ -83,6 +88,8 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
         private static void ReadCreateObjectBlock(Packet packet, CreateObject createObject, WowGuid guid, uint map, CreateObjectType createType, object index)
         {
             ObjectType objType = ObjectTypeConverter.Convert(packet.ReadByteE<ObjectTypeLegacy>("Object Type", index));
+
+            CoreParsers.MovementHandler.RegisterObjCreateInPhases(packet, guid);
 
             WoWObject obj = CoreParsers.UpdateHandler.CreateObject(objType, guid, map);
 

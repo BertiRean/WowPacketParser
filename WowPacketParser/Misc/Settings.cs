@@ -20,6 +20,7 @@ namespace WowPacketParser.Misc
         public static readonly TargetedDatabase TargetedDatabase = Conf.GetEnum("TargetedDatabase", TargetedDatabase.WrathOfTheLichKing);
         public static readonly DumpFormatType DumpFormat = Conf.GetEnum("DumpFormat", DumpFormatType.Text);
         public static readonly ulong SQLOutputFlag = GetSQLOutputFlag();
+        public static readonly bool ShowPossibleObjectsChangedByPhases = Conf.GetBoolean("ShowPossibleObjectsChangedByPhases", true);
         public static readonly bool SQLOrderByKey = Conf.GetBoolean("SqlOrderByKey", false);
         public static readonly bool SaveTempSpawns = Conf.GetBoolean("SaveTempSpawns", false);
         public static readonly bool SaveExistingSpawns = Conf.GetBoolean("SaveExistingSpawns", false);

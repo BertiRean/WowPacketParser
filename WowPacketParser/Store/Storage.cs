@@ -1,11 +1,21 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using Wintellect.PowerCollections;
 using WowPacketParser.Enums;
 using WowPacketParser.Misc;
 using WowPacketParser.Store.Objects;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WowPacketParser.Store
 {
+    public struct PhaseStackInfo
+    {
+        public List<ushort> AddedPhases;
+        public List<ushort> RemovedPhases;
+        public TimeSpan PacketTime;
+    };
+
     public static class Storage
     {
         // Stores opcodes read, npc/GOs/spell/item/etc IDs found in sniffs
@@ -64,6 +74,8 @@ namespace WowPacketParser.Store
         public static readonly StoreDictionary<uint /*menuID*/, NpcText925> GossipToNpcTextMap = new(new List<SQLOutput> { SQLOutput.npc_text });
 
         // Creature text (says, yells, etc.)
+        public static Stack<PhaseStackInfo> StackPhases = new Stack<PhaseStackInfo>();
+        public static Dictionary<uint, HashSet<WowGuid128>> AddedCreaturesInPhase = new Dictionary<uint, HashSet<WowGuid128>>();
         public static readonly StoreMulti<uint, CreatureText> CreatureTexts = new StoreMulti<uint, CreatureText>(new List<SQLOutput> { SQLOutput.creature_text });
 
         // Points of Interest
